@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang = “ja”>
+<head>
+<meta charset = “UFT-8”>
+</head>
+<form action = "/mission_2-1.php" method = "post">
+   名前：<input type = "text" name ="name" value = ""><br/>
+   コメント：<input type = "text" name ="comment" value = ""><br/>
+<input type = "submit" value ="送信">
+ </form>
+
+<?php
+$filename = "mission_2-1_kajii.txt";  //ファイル操作
+$fp = fopen($filename, 'a');
+$name = $_POST["name"];
+$comment = $_POST["comment"];
+$time = date("Y/m/d H:i:s");
+$count = count(file($filename));
+$text = "$count<>$name<>$comment<>$time\n";
+fwrite($fp, $text);
+fclose($fp);
+$ret_array = file($filename); //配列にいれる
+foreach($ret_array as $value) {    // 配列を順番に表示する
+$text1 = explode("<>", $value);  //分裂、値取得
+echo $text1[0]." ";
+echo $text1[1]." ";
+echo $text1[2]." ";
+echo $text1[3]."<br />\n";
+}
+?>
+</html>
